@@ -12,35 +12,35 @@
 <script>
 var binStr = "11011010";
 
-//�㷨һ
+//算法一
 function binToDecimal(bin){
 	
-	// ���������ַ����ָ�ɵ������ַ�����
+	// 将二进制字符串分割成单数字字符数组
 	var binStrArray = bin.split(''); // 1,1,0,1,1,0,1,0
-	var decimal = 0; //����ʮ���Ƶ����ս��
-	var temp = 1; //��ʱ����ÿһλת�����
+	var decimal = 0; //保存十进制的最终结果
+	var temp = 1; //临时保存每一位转换结果
 	
-	for (var i= binStrArray.length - 1, j = 0 ; i > 0 ; i-- , j++ ){ // i���ڣ������ƣ�2���ݣ�j����������ֵ
+	for (var i= binStrArray.length - 1, j = 0 ; i > 0 ; i-- , j++ ){ // i等于（二进制）2的幂，j是数组索引值
 
-		// �Ӷ��������������Чλ�������Чλ�������
-		if(binStrArray[j] == 1){ // �����j��Ԫ�ص���1������Ҫ����i��2��ˣ���2��i���ݣ�
+		// 从二进制数的最高有效位向最低有效位逐个迭代
+		if(binStrArray[j] == 1){ // 如果第j个元素等于1，则需要计算i个2相乘（即2的i次幂）
 			for (var k = i; k > 0 ; k-- ){ // 
 				temp *= 2; 
 			} 
-			decimal += temp; //�ۼ�ÿһλ��ת�����
-			temp = 1; // ��ǰλת����ϣ�������ʱ����
+			decimal += temp; //累加每一位的转换结果
+			temp = 1; // 当前位转换完毕，重置临时变量
 		}
 	}
 	alert(decimal);
 }
 
-//�㷨��
+//算法二
 function binToDecimal2(bin){
 	var decimal = 0, temp = 1, powerArray = [],pos=bin.indexOf('1');digits = bin.length;	
 	
-	//ͨ��whileѭ���õ���������ֵ������1��Ӧ���ݵ�����
+	//通过while循环得到二进制数值中所有1对应的幂的数组
 	while (pos  > -1 ){ 
-		powerArray.push(digits - pos - 1); //����������λ����1�ټ�����ֵ[7,6,4,3,1]
+		powerArray.push(digits - pos - 1); //二进制数的位数减1再减索引值[7,6,4,3,1]
 		pos = bin.indexOf('1', pos +1);
 	}
 
@@ -54,13 +54,13 @@ function binToDecimal2(bin){
 	alert(decimal);
 }
 
-//�㷨�����㷨�����Ż�
+//算法三：算法二的优化
 function binToDecimal3(bin){
 	var decimal = 0, temp = 1, pos=bin.indexOf('1');digits = bin.length;	
 	
-	//ͨ��whileѭ���õ���������ֵ������1��Ӧ���ݵ�����
+	//通过while循环得到二进制数值中所有1对应的幂的数组
 	while (pos  > -1 ){ 
-		var power = digits - pos - 1; //����������λ����1�ټ�����ֵ������
+		var power = digits - pos - 1; //二进制数的位数减1再减索引值等于幂
 		for (var i = 0; i < power ; i++ ){
 				temp *= 2;
 		}
@@ -71,12 +71,12 @@ function binToDecimal3(bin){
 }
 
 
-//�㷨��
+//算法四
 function binToDecimal4(bin){
 	var decimal = 0, temp = 1, digits = bin.length; currentBit = bin.slice(0,1);
 	while (digits > 0){
 		if (currentBit == 1){
-			var power = digits - 1; //����������λ����1��������
+			var power = digits - 1; //二进制数的位数减1即等于幂
 			for (var i = 0; i < power ; i++ ){
 					temp *= 2;
 			}
@@ -87,12 +87,12 @@ function binToDecimal4(bin){
 	alert(decimal);
 }
 
-//�㷨�壺�㷨�ĵı��塪������������ַ���
+//算法五：算法四的变体——用数组代替字符串
 function binToDecimal5(bin){
 	var decimal = 0, temp = 1, binStrArray = bin.split(''),  currentBit = binStrArray.shift(), digits = binStrArray.length;;
 	while (digits > 0){
 		if (currentBit == 1){
-			var power = digits; //���鳤�ȼ�������
+			var power = digits; //数组长度即等于幂
 			for (var i = 0; i < power ; i++ ){
 					temp *= 2;
 			}
@@ -105,12 +105,12 @@ function binToDecimal5(bin){
 	alert(decimal);
 }
 
-//�㷨�����㷨��ı��塪��ʹ��pop()����
+//算法六：算法五的变体——使用pop()方法
 function binToDecimal6(bin){
 	var decimal = 0, temp = 1, binStrArray = bin.split(''),  currentBit = binStrArray.shift(), digits = binStrArray.length;;
 	while (digits > 0){
 		if (currentBit == 1){
-			var power = digits; //���鳤�ȼ�������
+			var power = digits; //数组长度即等于幂
 			for (var i = 0; i < power ; i++ ){
 					temp *= 2;
 			}
@@ -127,13 +127,13 @@ function binToDecimal6(bin){
 </script>
 </body>
 </html>
-�汾һ��
+版本一：
 http://www.amazon.com/review/RE1FCBDETGNYE
 
-�汾����
+版本二：
 http://dj.iciba.com/A%20man%20should%20learn%20to%20detect%20and
 
 
-���Ǳ�Ӧѧ�ᷢ�ֺ�����ͷ�������ݼ��Ŷ�����������ն���Ȼ�޹����С�Ȼ������������ص��뷨������Ϊ��ˣ��ֺ����ױ��������Ժ� 
+人们本应学会发现和培养头脑中稍纵即逝而又让整个天空都黯然无光的灵感。然而，灵感是奇特的想法，正因为如此，又很容易被人抛诸脑后。 
 
-���֮�⣬���ݼ��ţ����֮�⣬���Ӱ˻ģ�
+灵感之光，稍纵即逝；灵感之光，横视八荒；
