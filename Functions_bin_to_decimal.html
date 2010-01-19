@@ -1,0 +1,139 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title> New Document </title>
+<meta name="Generator" content="EditPlus">
+<meta name="Author" content="">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+</head>
+
+<body>
+<script>
+var binStr = "11011010";
+
+//算法一
+function binToDecimal(bin){
+	
+	// 将二进制字符串分割成单数字字符数组
+	var binStrArray = bin.split(''); // 1,1,0,1,1,0,1,0
+	var decimal = 0; //保存十进制的最终结果
+	var temp = 1; //临时保存每一位转换结果
+	
+	for (var i= binStrArray.length - 1, j = 0 ; i > 0 ; i-- , j++ ){ // i等于（二进制）2的幂，j是数组索引值
+
+		// 从二进制数的最高有效位向最低有效位逐个迭代
+		if(binStrArray[j] == 1){ // 如果第j个元素等于1，则需要计算i个2相乘（即2的i次幂）
+			for (var k = i; k > 0 ; k-- ){ // 
+				temp *= 2; 
+			} 
+			decimal += temp; //累加每一位的转换结果
+			temp = 1; // 当前位转换完毕，重置临时变量
+		}
+	}
+	alert(decimal);
+}
+
+//算法二
+function binToDecimal2(bin){
+	var decimal = 0, temp = 1, powerArray = [],pos=bin.indexOf('1');digits = bin.length;	
+	
+	//通过while循环得到二进制数值中所有1对应的幂的数组
+	while (pos  > -1 ){ 
+		powerArray.push(digits - pos - 1); //二进制数的位数减1再减索引值[7,6,4,3,1]
+		pos = bin.indexOf('1', pos +1);
+	}
+
+	for (var i = 0; i < powerArray.length ; i++ ){
+		var j =  powerArray[i];
+		for (var k = 0; k<j ; k++ ){
+			temp *= 2;
+		}
+		decimal += temp; temp = 1; 
+	}
+	alert(decimal);
+}
+
+//算法三：算法二的优化
+function binToDecimal3(bin){
+	var decimal = 0, temp = 1, pos=bin.indexOf('1');digits = bin.length;	
+	
+	//通过while循环得到二进制数值中所有1对应的幂的数组
+	while (pos  > -1 ){ 
+		var power = digits - pos - 1; //二进制数的位数减1再减索引值等于幂
+		for (var i = 0; i < power ; i++ ){
+				temp *= 2;
+		}
+		decimal += temp; temp = 1; 
+		pos = bin.indexOf('1', pos +1);
+	}
+	alert(decimal);
+}
+
+
+//算法四
+function binToDecimal4(bin){
+	var decimal = 0, temp = 1, digits = bin.length; currentBit = bin.slice(0,1);
+	while (digits > 0){
+		if (currentBit == 1){
+			var power = digits - 1; //二进制数的位数减1即等于幂
+			for (var i = 0; i < power ; i++ ){
+					temp *= 2;
+			}
+			decimal += temp; temp = 1; 		
+		}
+		bin = bin.slice(1); currentBit = bin.slice(0,1);digits = bin.length;
+	}
+	alert(decimal);
+}
+
+//算法五：算法四的变体——用数组代替字符串
+function binToDecimal5(bin){
+	var decimal = 0, temp = 1, binStrArray = bin.split(''),  currentBit = binStrArray.shift(), digits = binStrArray.length;;
+	while (digits > 0){
+		if (currentBit == 1){
+			var power = digits; //数组长度即等于幂
+			for (var i = 0; i < power ; i++ ){
+					temp *= 2;
+			}
+			decimal += temp; temp = 1; 		
+		}
+		currentBit = binStrArray.shift(); digits = binStrArray.length;
+
+
+	}
+	alert(decimal);
+}
+
+//算法六：算法五的变体——使用pop()方法
+function binToDecimal6(bin){
+	var decimal = 0, temp = 1, binStrArray = bin.split(''),  currentBit = binStrArray.shift(), digits = binStrArray.length;;
+	while (digits > 0){
+		if (currentBit == 1){
+			var power = digits; //数组长度即等于幂
+			for (var i = 0; i < power ; i++ ){
+					temp *= 2;
+			}
+			decimal += temp; temp = 1; 		
+		}
+		currentBit = binStrArray.shift(); digits = binStrArray.length;
+
+
+	}
+	alert(decimal);
+}
+ binToDecimal6(binStr); // 218
+
+</script>
+</body>
+</html>
+版本一：
+http://www.amazon.com/review/RE1FCBDETGNYE
+
+版本二：
+http://dj.iciba.com/A%20man%20should%20learn%20to%20detect%20and
+
+
+人们本应学会发现和培养头脑中稍纵即逝而又让整个天空都黯然无光的灵感。然而，灵感是奇特的想法，正因为如此，又很容易被人抛诸脑后。 
+
+灵感之光，稍纵即逝；灵感之光，横视八荒；
